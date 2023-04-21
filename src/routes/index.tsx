@@ -1,16 +1,31 @@
-import { component$ } from '@builder.io/qwik';
-import { DocumentHead, Form, routeAction$ } from '@builder.io/qwik-city';
+import { component$, useStore } from '@builder.io/qwik';
+import { DocumentHead, Form, routeAction$, server$ } from '@builder.io/qwik-city';
+import { db } from './db';
 
+
+// interface User {
+//   id: number,
+//   username: string,
+//   email: string,
+// }
+
+const doLogin = server$(async (data) => {
+  const user = await db.user.findMany(data.us);
+
+});
 
 export const useLoginAction = routeAction$((data) => {
   if (data.username, data.password) {
-    console.log(`Username: ${data.username}\nPassword: ${data.password}`)
+    doLogin(data)
   }
 });
 
 
 export default component$(() => {
   const login = useLoginAction();
+  const errors = useStore({
+    errors: []
+  })
   return (
     <>
       <div class="flex-1 flex flex-col min-h-screen">
