@@ -1,27 +1,47 @@
 import { component$ } from '@builder.io/qwik';
-import type { DocumentHead } from '@builder.io/qwik-city';
+import { DocumentHead, Form, routeAction$ } from '@builder.io/qwik-city';
+
+
+export const useLoginAction = routeAction$((data) => {
+  if (data.username, data.password) {
+    console.log(`Username: ${data.username}\nPassword: ${data.password}`)
+  }
+});
+
 
 export default component$(() => {
+  const login = useLoginAction();
   return (
     <>
-      <div class="flex-1 flex flex-col">
-        <header class="bg-gray-100 border-b border-gray-200">
-          <div class="container mx-auto px-4 py-2 flex justify-between items-center">
-            <h2 class="text-xl font-semibold">Dashboard</h2>
-            <div class="flex space-x-2">
-              <button class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-md">
-                Add
-              </button>
-              <button class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-md">
-                Search
-              </button>
-            </div>
+      <div class="flex-1 flex flex-col min-h-screen">
+        <div class="min-h-screen flex items-center justify-center">
+          <div class="bg-white p-10 rounded-lg shadow-lg shadow-black">
+            <h1 class="text-3xl font-semibold mb-5">Sign In</h1>
+            <Form action={login}>
+              <div class="mb-6">
+                <label class="block text-gray-700 font-bold text-lg mb-2" for="username">
+                  Username
+                </label>
+                <input class="appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg" id="username" type="text" name="username" placeholder="Enter your username" />
+              </div>
+              <div class="mb-8">
+                <label class="block text-gray-700 font-bold text-lg mb-2" for="password">
+                  Password
+                </label>
+                <input class="appearance-none border rounded w-full py-3 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline text-lg" id="password" type="password" name="password" placeholder="Enter your password" />
+              </div>
+              <div class="flex items-center justify-between">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline text-lg" type="submit">
+                  Sign In
+                </button>
+                <a class="ms-10 inline-block align-baseline font-bold text-lg text-blue-500 hover:text-blue-800" href="#">
+                  Forgot Password?
+                </a>
+              </div>
+            </Form>
           </div>
-        </header>
-        <main class="container mx-auto px-4 py-4">
-          <p>Content goes here</p>
-        </main>
-      </div>
+        </div>
+      </div >
     </>
   );
 });
